@@ -71,16 +71,16 @@ def load_skempi_entries(csv_path, pdb_dir, block_list={'1KBH'}):
 class SkempiDataset(Dataset):
 
     def __init__(
-        self, 
-        csv_path, 
-        pdb_dir, 
+        self,
+        csv_path,
+        pdb_dir,
         cache_dir,
-        cvfold_index=0, 
-        num_cvfolds=3, 
-        split='train', 
+        cvfold_index=0,
+        num_cvfolds=3,
+        split='train',
         split_seed=2022,
-        transform=None, 
-        blocklist=frozenset({'1KBH'}), 
+        transform=None,
+        blocklist=frozenset({'1KBH'}),
         reset=False
     ):
         super().__init__()
@@ -123,7 +123,7 @@ class SkempiDataset(Dataset):
 
         split_size = math.ceil(len(complex_list) / self.num_cvfolds)
         complex_splits = [
-            complex_list[i*split_size : (i+1)*split_size] 
+            complex_list[i*split_size : (i+1)*split_size]
             for i in range(self.num_cvfolds)
         ]
 
@@ -138,7 +138,7 @@ class SkempiDataset(Dataset):
         for cplx in complexes_this:
             entries += complex_to_entries[cplx]
         self.entries = entries
-        
+
     def _preprocess_entries(self):
         entries = load_skempi_entries(self.csv_path, self.pdb_dir, self.blocklist)
         with open(self.entries_cache, 'wb') as f:
